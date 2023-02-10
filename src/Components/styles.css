@@ -1,0 +1,86 @@
+.top-buttons {
+  margin: 0 6% 64px 6%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.top-left-buttons {
+  display: flex;
+  gap: 16px;
+}
+
+.categories {
+  width: 87px;
+  height: 40px;
+  border-radius: 100px;
+}
+
+.dark-grey-button {
+  background-color: rgba(8, 30, 52, 0.42);
+}
+
+.light-grey-button {
+  background-color: rgba(8, 30, 52, 0.05);
+}
+
+.button-text {
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 18px;
+}
+
+.white-text {
+  color: #ffffff;
+}
+
+.add-button {
+  width: 52px;
+  height: 52px;
+  border-radius: 100px;
+  background-color: #081e34;
+  padding: 14px;
+}
+
+.window-title {
+  margin: 0 5% 26px 5%;
+  display: flex;
+  padding-bottom: 26px;
+  border-bottom: 2px solid rgba(21, 21, 23, 0.2);
+}
+
+.title-text {
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 28px;
+}
+
+.task-list {
+  margin: 0 4%;
+}
+
+.task {
+  display: flex;
+  align-items: center;
+}
+
+.task-dots {
+  width: 24px;
+  height: 24px;
+}
+
+input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: #712fff;
+}
+
+label {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 22px;
+  margin-left: 8px;
+}
+
+input[type="checkbox"]:checked + label.task-text {
+  text-decoration: line-through;
+}
