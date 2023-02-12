@@ -20,3 +20,11 @@ h6 {
   margin: 0;
   color: #081e34;
 }
+
+a:hover {
+  color: #081e34;
+}
+
+a:visited {
+  color: #081e34;
+}

@@ -1,6 +1,6 @@
 import "./styles.css";
 import PLUS_SIGN from "./Images/Plus Math.svg";
-import TASK_DOTS from "./Images/Icon Menu.svg";
+import Task from "./TaskList";
 
 export default function Main() {
   return (
@@ -27,30 +27,7 @@ export default function Main() {
         <h4 className="title-text">To Do</h4>
       </div>
       <div className="task-list">
-        <div className="task">
-          <img className="task-dots" src={TASK_DOTS} alt="task menu" />
-          <input type="checkbox" id="task1" name="task1" value="task1" />
-          <label className="task-text" for="task1">
-            Write Essay
-          </label>
-          <br />
-        </div>
-        <div className="task">
-          <img className="task-dots" src={TASK_DOTS} alt="task menu" />
-          <input type="checkbox" id="task1" name="task1" value="task1" />
-          <label className="task-text" for="task1">
-            Go to gym
-          </label>
-          <br />
-        </div>
-        <div className="task">
-          <img className="task-dots" src={TASK_DOTS} alt="task menu" />
-          <input type="checkbox" id="task1" name="task1" value="task1" />
-          <label className="task-text" for="task1">
-            Buy book
-          </label>
-          <br />
-        </div>
+        <Task />
       </div>
     </div>
   );
