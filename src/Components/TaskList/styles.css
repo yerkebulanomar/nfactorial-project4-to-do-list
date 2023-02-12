@@ -3,7 +3,12 @@
   align-items: center;
 }
 
-.task-dots {
+.task-dots-button {
+  display: block;
+  padding: 0;
+}
+
+.task-dots-img {
   width: 24px;
   height: 24px;
 }
@@ -23,5 +28,5 @@ label {
 
 input[type="checkbox"]:checked + label.task-text {
   text-decoration: line-through;
-  opacity: 0.5;
+  color: #959595;
 }
