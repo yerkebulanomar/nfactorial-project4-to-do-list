@@ -26,6 +26,34 @@ export default function Main() {
     setIsActiveTrash(true);
   };
 
+  const tasks = [
+    {
+      id: 0,
+      toDo: "write an essay",
+      category: "To Do",
+    },
+    {
+      id: 1,
+      toDo: "read the book",
+      category: "To Do",
+    },
+    {
+      id: 2,
+      toDo: "go to gym",
+      category: "To Do",
+    },
+    {
+      id: 3,
+      toDo: "call mom",
+      category: "To Do",
+    },
+    {
+      id: 4,
+      toDo: "finish the task",
+      category: "To Do",
+    },
+  ];
+
   return (
     <div className="main">
       <div className="top-buttons">
@@ -83,7 +111,9 @@ export default function Main() {
         <h4 className="title-text">{category}</h4>
       </div>
       <div className="task-list">
-        <Task />
+        {tasks.map((item, index) => (
+          <Task key={index} {...item} />
+        ))}
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
 import TASK_DOTS from "../Images/Vector.svg";
 import "./styles.css";
 
-export default function Task() {
+export default function Task(props) {
   return (
     <div className="task">
       <button className="task-dots-button">
@@ -9,7 +9,7 @@ export default function Task() {
       </button>
       <input type="checkbox" id="task1" name="task1" value="task1" />
       <label className="task-text" for="task1">
-        Write Essay
+        {props.toDo}
       </label>
     </div>
   );
