@@ -1,4 +1,4 @@
-import TASK_DOTS from "../Images/Icon Menu.svg";
+import TASK_DOTS from "../Images/Vector.svg";
 import "./styles.css";
 
 export default function Task() {

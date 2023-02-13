@@ -13,25 +13,28 @@
   width: 87px;
   height: 40px;
   border-radius: 100px;
+  font-weight: 700;
+  font-size: 14px;
 }
 
-.dark-grey-button {
+/* .dark-grey-button {
   background-color: rgba(8, 30, 52, 0.42);
-}
+  color: white;
+} */
 
-.light-grey-button {
+/* .light-grey-button {
   background-color: rgba(8, 30, 52, 0.05);
-}
-
+} */
+/* 
 .button-text {
   font-weight: 700;
   font-size: 14px;
   line-height: 18px;
-}
+} */
 
-.white-text {
+/* .white-text {
   color: #ffffff;
-}
+} */
 
 .add-button {
   width: 52px;

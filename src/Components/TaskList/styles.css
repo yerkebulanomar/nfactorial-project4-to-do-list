@@ -4,13 +4,20 @@
 }
 
 .task-dots-button {
-  display: block;
-  padding: 0;
+  position: relative;
+  padding: 7px 10.5px 7px 11px;
+  width: 24px;
+  height: 24px;
 }
 
 .task-dots-img {
-  width: 24px;
-  height: 24px;
+  position: absolute;
+  left: 45.83%;
+  right: 43.75%;
+  top: 29.17%;
+  bottom: 29.17%;
+  width: 2.5px;
+  height: 10px;
 }
 
 input[type="checkbox"] {
