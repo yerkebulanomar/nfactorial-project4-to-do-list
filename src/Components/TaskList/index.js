@@ -7,10 +7,8 @@ export default function Task(props) {
       <button className="task-dots-button">
         <img className="task-dots-img" src={TASK_DOTS} alt="task menu" />
       </button>
-      <input type="checkbox" id="task1" name="task1" value="task1" />
-      <label className="task-text" for="task1">
-        {props.toDo}
-      </label>
+      <input type="checkbox" />
+      <label className="task-text">{props.toDo}</label>
     </div>
   );
 }

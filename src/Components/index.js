@@ -4,6 +4,34 @@ import Task from "./TaskList";
 import { useState } from "react";
 
 export default function Main() {
+  const tasks = [
+    {
+      id: 0,
+      toDo: "write an essay",
+      topic: "To Do",
+    },
+    {
+      id: 1,
+      toDo: "read the book",
+      topic: "Trash",
+    },
+    {
+      id: 2,
+      toDo: "go to gym",
+      topic: "To Do",
+    },
+    {
+      id: 3,
+      toDo: "call mom",
+      topic: "Done",
+    },
+    {
+      id: 4,
+      toDo: "finish the task",
+      topic: "Done",
+    },
+  ];
+
   const [category, setCategory] = useState("To Do");
 
   const [isActiveToDo, setIsActiveToDo] = useState(true);
@@ -26,33 +54,11 @@ export default function Main() {
     setIsActiveTrash(true);
   };
 
-  const tasks = [
-    {
-      id: 0,
-      toDo: "write an essay",
-      category: "To Do",
-    },
-    {
-      id: 1,
-      toDo: "read the book",
-      category: "To Do",
-    },
-    {
-      id: 2,
-      toDo: "go to gym",
-      category: "To Do",
-    },
-    {
-      id: 3,
-      toDo: "call mom",
-      category: "To Do",
-    },
-    {
-      id: 4,
-      toDo: "finish the task",
-      category: "To Do",
-    },
-  ];
+  const [filter, setFilter] = useState("To Do");
+
+  const filteredData = tasks.filter((item) => {
+    return item.topic === filter;
+  });
 
   return (
     <div className="main">
@@ -69,6 +75,7 @@ export default function Main() {
             onClick={() => {
               setCategory("To Do");
               selectToDo();
+              setFilter("To Do");
             }}>
             To Do
           </button>
@@ -83,6 +90,7 @@ export default function Main() {
             onClick={() => {
               setCategory("Done");
               selectDone();
+              setFilter("Done");
             }}>
             Done
           </button>
@@ -97,6 +105,7 @@ export default function Main() {
             onClick={() => {
               setCategory("Trash");
               selectTrash();
+              setFilter("Trash");
             }}>
             Trash
           </button>
@@ -111,7 +120,7 @@ export default function Main() {
         <h4 className="title-text">{category}</h4>
       </div>
       <div className="task-list">
-        {tasks.map((item, index) => (
+        {filteredData.map((item, index) => (
           <Task key={index} {...item} />
         ))}
       </div>
