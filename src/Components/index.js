@@ -58,12 +58,23 @@ export default function Main() {
     // console.log(keyFromCheck);
     const index = items.findIndex((item) => item.id === keyFromCheck);
     const oldObject = items[index];
-    // console.log(oldObject);
-    const newObject = { ...oldObject, checked: !oldObject.checked };
-    const leftPart = items.slice(0, index);
-    const rightPart = items.slice(index + 1, items.length);
-    const newItems = [...leftPart, newObject, ...rightPart];
-    setItems(newItems);
+    console.log(oldObject.type);
+
+    if (oldObject.type === "Trash") {
+      const newObject = { ...oldObject, checked: "" };
+      console.log(newObject);
+      const leftPart = items.slice(0, index);
+      const rightPart = items.slice(index + 1, items.length);
+      const newItems = [...leftPart, newObject, ...rightPart];
+      setItems(newItems);
+    } else {
+      const newObject = { ...oldObject, checked: !oldObject.checked };
+      const leftPart = items.slice(0, index);
+      const rightPart = items.slice(index + 1, items.length);
+      const newItems = [...leftPart, newObject, ...rightPart];
+      setItems(newItems);
+      console.log(newObject);
+    }
   };
 
   const [filter, setFilter] = useState("To Do");
@@ -72,12 +83,49 @@ export default function Main() {
     setType(typeFromButton);
   };
 
-  const filteredData = items.filter((item) =>
-    type === "To Do"
-      ? !item.checked
-      : type === "Done"
-      ? item.checked
-      : type === "Trash"
+  const filteredData = items.filter(
+    (item) =>
+      // if (type === "Trash") {
+      //   return item.type === "Trash";
+      // } else {
+      //   if (type === "Done") {
+      //     return item.check;
+      //   } else if (type === "To Do") {
+      //     return !item.check;
+      //   }
+      // }
+
+      // if (item.type === filter) {
+      //   return item.type === filter;
+      // }
+      // if (!item.check) {
+      //   return item.type === "To Do";
+      // } else if (item.check) {
+      //   return item.type === "Done";
+      // }
+      // if (type === "Trash") {
+      //   return item.type === "Trash";
+      // } else {
+      //   if (!item.check) {
+      //     return item.type === "Done";
+      //   } else {
+      //     return item.type === "To Do";
+      //   }
+      // }
+
+      type === "To Do"
+        ? !item.checked
+        : type === "Done"
+        ? item.checked
+        : type === "Trash"
+
+    // !item.checked
+    //   ? type === "To Do"
+    //   : item.checked
+    //   ? type === "Done"
+    //   : type === "Trash"
+
+    // return item.type === filter;
   );
 
   return (
