@@ -2,7 +2,8 @@ import "./styles.css";
 import PLUS_SIGN from "./Images/Plus Math.svg";
 import { useState } from "react";
 import TASK_DOTS from "./Images/Vector.svg";
-let tasks = [
+import Modal from "./Modal";
+const tasks = [
   {
     id: 0,
     content: "write an essay",
@@ -31,7 +32,7 @@ let tasks = [
     id: 4,
     content: "finish the task",
     type: "Trash",
-    checked: "",
+    checked: true,
   },
 ];
 
@@ -39,6 +40,7 @@ export default function Main() {
   const [items, setItems] = useState(tasks);
   const [type, setType] = useState("To Do");
   const [filter, setFilter] = useState("To Do");
+  const [isModalShown, setIsModalShown] = useState(false);
 
   // переключатель цвета button
   const [isActiveToDo, setIsActiveToDo] = useState(true);
@@ -65,16 +67,15 @@ export default function Main() {
   const handleCheck = (keyFromCheck) => {
     const index = items.findIndex((item) => item.id === keyFromCheck);
     const oldObject = items[index];
-    // console.log(oldObject.type);
 
     if (oldObject.type === "Trash") {
-      const newObject = { ...oldObject };
-      // console.log(newObject);
-      newObject.checked = "";
-      const leftPart = items.slice(0, index);
-      const rightPart = items.slice(index + 1, items.length);
-      const newItems = [...leftPart, newObject, ...rightPart];
-      setItems(newItems);
+      // const newObject = { ...oldObject };
+      // // console.log(newObject);
+      // // newObject.checked = "";
+      // const leftPart = items.slice(0, index);
+      // const rightPart = items.slice(index + 1, items.length);
+      // const newItems = [...leftPart, newObject, ...rightPart];
+      setItems(items);
     } else {
       if (oldObject.type === "To Do") {
         const newObject = { ...oldObject };
@@ -101,14 +102,12 @@ export default function Main() {
     setType(typeFromButton);
   };
 
-  const filteredData = items.filter(
-    (item) => item.type === filter
-    // type === "Trash"
-    //   ? item.type === "Trash"
-    //   : type === "Done"
-    //   ? (item.checked = true)
-    //   : (item.checked = false)
-  );
+  const filteredData = items.filter((item) => item.type === filter);
+
+  const openModal = () => {
+    console.log(isModalShown);
+    setIsModalShown(!isModalShown);
+  };
 
   return (
     <div className="main">
@@ -161,9 +160,10 @@ export default function Main() {
           </button>
         </div>
         <div>
-          <button className="add-button">
+          <button className="add-button" onClick={openModal}>
             <img src={PLUS_SIGN} alt="plus" />
           </button>
+          {isModalShown && <Modal />}
         </div>
       </div>
       <div className="window-title">

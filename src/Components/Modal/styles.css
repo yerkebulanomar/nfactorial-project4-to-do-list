@@ -1,0 +1,61 @@
+.add-modal {
+  width: 268px;
+  height: 234px;
+  background: #e4e6e7;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.16);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: absolute;
+  top: 92px;
+  left: 72%;
+}
+
+.add-modal-title {
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 22px;
+  margin: 16px 16px 0 16px;
+}
+
+.modal-input {
+  background: #ffffff;
+  border-radius: 8px;
+  border: none;
+  margin: 0 16px;
+}
+
+textarea::placeholder {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 22px;
+  color: #959595;
+}
+
+textarea {
+  margin: 16px 16px 0 16px;
+  width: 206px;
+  height: 100px;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 22px;
+  padding: 15px;
+  border: none;
+}
+
+.modal-add-button {
+  width: 76px;
+  height: 40px;
+  background: linear-gradient(0deg, #081e34, #081e34), #fffbfe;
+  border-radius: 100px;
+  color: white;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 18px;
+  margin: 0 16px 16px 16px;
+}
