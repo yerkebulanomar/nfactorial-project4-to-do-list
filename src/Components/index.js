@@ -3,44 +3,49 @@ import PLUS_SIGN from "./Images/Plus Math.svg";
 import { useState } from "react";
 import TASK_DOTS from "./Images/Vector.svg";
 import Modal from "./Modal";
+import DeleteModal from "./Modal/DeleteModal";
+import MoveToTrashModal from "./Modal/MoveToTrashModal";
+import { v4 as uuid } from "uuid";
+
 const tasks = [
   {
-    id: 0,
+    id: uuid(),
     content: "write an essay",
     type: "Done",
     checked: true,
   },
   {
-    id: 1,
+    id: uuid(),
     content: "read the book",
     type: "Done",
     checked: true,
   },
   {
-    id: 2,
+    id: uuid(),
     content: "go to gym",
     type: "Done",
     checked: true,
   },
   {
-    id: 3,
+    id: uuid(),
     content: "call mom",
     type: "To Do",
     checked: false,
   },
   {
-    id: 4,
+    id: uuid(),
     content: "finish the task",
     type: "Trash",
     checked: true,
   },
 ];
 
-export default function Main() {
+export default function Main(props) {
   const [items, setItems] = useState(tasks); // перезаписываем массив
-  // const [type, setType] = useState("To Do"); // перезаписываем категорию, показали на семинаре
+  const [type, setType] = useState("To Do"); // перезаписываем категорию, показали на семинаре
   const [filter, setFilter] = useState("To Do"); //используем для фильтра и изменения надписи темы
   const [isAddModalShown, setIsAddModalShown] = useState(false); // открытие и закрытие модального окна для добавления todo
+  const [isDeleteModalShown, setIsDeleteModalShown] = useState(false);
 
   // переключатель цвета button
   const [isActiveToDo, setIsActiveToDo] = useState(true);
@@ -68,10 +73,14 @@ export default function Main() {
     setIsAddModalShown(!isAddModalShown);
   };
 
+  const openDeleteModal = () => {
+    setIsDeleteModalShown(!isDeleteModalShown);
+  };
+
   // adding new todos in a modal window
   const addToDo = (todo) => {
     const newItem = {
-      id: new Date(),
+      id: uuid(),
       content: todo,
       type: "To Do",
       checked: false,
@@ -107,10 +116,17 @@ export default function Main() {
     }
   };
 
+  const handleClick = (keyFromClick) => {
+    console.log(keyFromClick);
+    const index = items.findIndex((item) => item.id === keyFromClick);
+    console.log("my index is", index);
+    const oldObject = items[index];
+  };
+
   // такое чувство что эта функция не нужна
-  // const handleStatus = (typeFromButton) => {
-  //   setType(typeFromButton);
-  // };
+  const handleStatus = (typeFromButton) => {
+    setType(typeFromButton);
+  };
 
   // фильтр отображения todos по категориям
   const filteredData = items.filter((item) => item.type === filter);
@@ -178,9 +194,29 @@ export default function Main() {
       <div className="task-list">
         {filteredData.map((item) => (
           <div className="task" key={item.id}>
-            <button className="task-dots-button">
-              <img className="task-dots-img" src={TASK_DOTS} alt="task menu" />
-            </button>
+            <div className="modal-container">
+              <button
+                className="task-dots-button"
+                onClick={() => {
+                  openDeleteModal();
+                  handleClick(item.id);
+                }}>
+                <img
+                  className="task-dots-img"
+                  src={TASK_DOTS}
+                  alt="task menu"
+                />
+              </button>
+              {isDeleteModalShown &&
+              (item.type === "To Do" || item.type === "Done") ? (
+                <MoveToTrashModal />
+              ) : isDeleteModalShown && item.type === "Trash" ? (
+                <DeleteModal />
+              ) : (
+                ""
+              )}
+            </div>
+
             <input
               type="checkbox"
               checked={item.checked}
