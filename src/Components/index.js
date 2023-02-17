@@ -37,10 +37,10 @@ const tasks = [
 ];
 
 export default function Main() {
-  const [items, setItems] = useState(tasks);
-  const [type, setType] = useState("To Do");
-  const [filter, setFilter] = useState("To Do");
-  const [isModalShown, setIsModalShown] = useState(false);
+  const [items, setItems] = useState(tasks); // перезаписываем массив
+  // const [type, setType] = useState("To Do"); // перезаписываем категорию, показали на семинаре
+  const [filter, setFilter] = useState("To Do"); //используем для фильтра и изменения надписи темы
+  const [isAddModalShown, setIsAddModalShown] = useState(false); // открытие и закрытие модального окна для добавления todo
 
   // переключатель цвета button
   const [isActiveToDo, setIsActiveToDo] = useState(true);
@@ -63,13 +63,13 @@ export default function Main() {
     setIsActiveTrash(true);
   };
 
-  const openModal = () => {
-    // console.log(isModalShown);
-    setIsModalShown(!isModalShown);
+  // функция для открытия модального окна для добавления todo
+  const openAddModal = () => {
+    setIsAddModalShown(!isAddModalShown);
   };
 
+  // adding new todos in a modal window
   const addToDo = (todo) => {
-    console.log("new todo", todo);
     const newItem = {
       id: new Date(),
       content: todo,
@@ -83,7 +83,6 @@ export default function Main() {
   const handleCheck = (keyFromCheck) => {
     const index = items.findIndex((item) => item.id === keyFromCheck);
     const oldObject = items[index];
-
     if (oldObject.type === "Trash") {
       setItems(items);
     } else {
@@ -108,10 +107,12 @@ export default function Main() {
     }
   };
 
-  const handleStatus = (typeFromButton) => {
-    setType(typeFromButton);
-  };
+  // такое чувство что эта функция не нужна
+  // const handleStatus = (typeFromButton) => {
+  //   setType(typeFromButton);
+  // };
 
+  // фильтр отображения todos по категориям
   const filteredData = items.filter((item) => item.type === filter);
 
   return (
@@ -129,7 +130,7 @@ export default function Main() {
             onClick={() => {
               selectToDo();
               setFilter("To Do");
-              handleStatus("To Do");
+              // handleStatus("To Do");
             }}>
             To Do
           </button>
@@ -144,7 +145,7 @@ export default function Main() {
             onClick={() => {
               selectDone();
               setFilter("Done");
-              handleStatus("Done");
+              // handleStatus("Done");
             }}>
             Done
           </button>
@@ -159,16 +160,16 @@ export default function Main() {
             onClick={() => {
               selectTrash();
               setFilter("Trash");
-              handleStatus("Trash");
+              // handleStatus("Trash");
             }}>
             Trash
           </button>
         </div>
         <div>
-          <button className="add-button" onClick={openModal}>
+          <button className="add-button" onClick={openAddModal}>
             <img src={PLUS_SIGN} alt="plus" />
           </button>
-          {isModalShown && <Modal addToDo={addToDo} />}
+          {isAddModalShown && <Modal addToDo={addToDo} />}
         </div>
       </div>
       <div className="window-title">
