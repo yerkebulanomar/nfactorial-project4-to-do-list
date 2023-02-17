@@ -6,34 +6,41 @@ let tasks = [
   {
     id: 0,
     content: "write an essay",
-    type: "To Do",
+    type: "Done",
+    checked: true,
   },
   {
     id: 1,
     content: "read the book",
-    type: "To Do",
+    type: "Done",
+    checked: true,
   },
   {
     id: 2,
     content: "go to gym",
     type: "Done",
+    checked: true,
   },
   {
     id: 3,
     content: "call mom",
     type: "To Do",
+    checked: false,
   },
   {
     id: 4,
     content: "finish the task",
     type: "Trash",
+    checked: "",
   },
 ];
 
 export default function Main() {
   const [items, setItems] = useState(tasks);
   const [type, setType] = useState("To Do");
+  const [filter, setFilter] = useState("To Do");
 
+  // переключатель цвета button
   const [isActiveToDo, setIsActiveToDo] = useState(true);
   const [isActiveDone, setIsActiveDone] = useState(false);
   const [isActiveTrash, setIsActiveTrash] = useState(false);
@@ -54,78 +61,53 @@ export default function Main() {
     setIsActiveTrash(true);
   };
 
+  // распознование включения галочки в checkbox
   const handleCheck = (keyFromCheck) => {
-    // console.log(keyFromCheck);
     const index = items.findIndex((item) => item.id === keyFromCheck);
     const oldObject = items[index];
-    console.log(oldObject.type);
+    // console.log(oldObject.type);
 
     if (oldObject.type === "Trash") {
-      const newObject = { ...oldObject, checked: "" };
-      console.log(newObject);
+      const newObject = { ...oldObject };
+      // console.log(newObject);
+      newObject.checked = "";
       const leftPart = items.slice(0, index);
       const rightPart = items.slice(index + 1, items.length);
       const newItems = [...leftPart, newObject, ...rightPart];
       setItems(newItems);
     } else {
-      const newObject = { ...oldObject, checked: !oldObject.checked };
-      const leftPart = items.slice(0, index);
-      const rightPart = items.slice(index + 1, items.length);
-      const newItems = [...leftPart, newObject, ...rightPart];
-      setItems(newItems);
-      console.log(newObject);
+      if (oldObject.type === "To Do") {
+        const newObject = { ...oldObject };
+        newObject.checked = true;
+        newObject.type = "Done";
+        const leftPart = items.slice(0, index);
+        const rightPart = items.slice(index + 1, items.length);
+        const newItems = [...leftPart, newObject, ...rightPart];
+        return setItems(newItems);
+      }
+      if (oldObject.type === "Done") {
+        const newObject = { ...oldObject };
+        newObject.checked = false;
+        newObject.type = "To Do";
+        const leftPart = items.slice(0, index);
+        const rightPart = items.slice(index + 1, items.length);
+        const newItems = [...leftPart, newObject, ...rightPart];
+        return setItems(newItems);
+      }
     }
   };
-
-  const [filter, setFilter] = useState("To Do");
 
   const handleStatus = (typeFromButton) => {
     setType(typeFromButton);
   };
 
   const filteredData = items.filter(
-    (item) =>
-      // if (type === "Trash") {
-      //   return item.type === "Trash";
-      // } else {
-      //   if (type === "Done") {
-      //     return item.check;
-      //   } else if (type === "To Do") {
-      //     return !item.check;
-      //   }
-      // }
-
-      // if (item.type === filter) {
-      //   return item.type === filter;
-      // }
-      // if (!item.check) {
-      //   return item.type === "To Do";
-      // } else if (item.check) {
-      //   return item.type === "Done";
-      // }
-      // if (type === "Trash") {
-      //   return item.type === "Trash";
-      // } else {
-      //   if (!item.check) {
-      //     return item.type === "Done";
-      //   } else {
-      //     return item.type === "To Do";
-      //   }
-      // }
-
-      type === "To Do"
-        ? !item.checked
-        : type === "Done"
-        ? item.checked
-        : type === "Trash"
-
-    // !item.checked
-    //   ? type === "To Do"
-    //   : item.checked
-    //   ? type === "Done"
-    //   : type === "Trash"
-
-    // return item.type === filter;
+    (item) => item.type === filter
+    // type === "Trash"
+    //   ? item.type === "Trash"
+    //   : type === "Done"
+    //   ? (item.checked = true)
+    //   : (item.checked = false)
   );
 
   return (
@@ -133,7 +115,7 @@ export default function Main() {
       <div className="top-buttons">
         <div className="top-left-buttons">
           <button
-            className="categories dark-grey-button"
+            className="categories"
             style={{
               backgroundColor: isActiveToDo
                 ? "rgba(8, 30, 52, 0.42)"
@@ -148,7 +130,7 @@ export default function Main() {
             To Do
           </button>
           <button
-            className="categories light-grey-button"
+            className="categories"
             style={{
               backgroundColor: isActiveDone
                 ? "rgba(8, 30, 52, 0.42)"
@@ -163,7 +145,7 @@ export default function Main() {
             Done
           </button>
           <button
-            className="categories light-grey-button"
+            className="categories"
             style={{
               backgroundColor: isActiveTrash
                 ? "rgba(8, 30, 52, 0.42)"
