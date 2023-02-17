@@ -48,6 +48,10 @@ textarea {
   border: none;
 }
 
+textarea:focus {
+  outline: none;
+}
+
 .modal-add-button {
   width: 76px;
   height: 40px;

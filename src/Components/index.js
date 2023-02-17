@@ -63,18 +63,28 @@ export default function Main() {
     setIsActiveTrash(true);
   };
 
+  const openModal = () => {
+    // console.log(isModalShown);
+    setIsModalShown(!isModalShown);
+  };
+
+  const addToDo = (todo) => {
+    console.log("new todo", todo);
+    const newItem = {
+      id: new Date(),
+      content: todo,
+      type: "To Do",
+      checked: false,
+    };
+    return setItems([...items, newItem]);
+  };
+
   // распознование включения галочки в checkbox
   const handleCheck = (keyFromCheck) => {
     const index = items.findIndex((item) => item.id === keyFromCheck);
     const oldObject = items[index];
 
     if (oldObject.type === "Trash") {
-      // const newObject = { ...oldObject };
-      // // console.log(newObject);
-      // // newObject.checked = "";
-      // const leftPart = items.slice(0, index);
-      // const rightPart = items.slice(index + 1, items.length);
-      // const newItems = [...leftPart, newObject, ...rightPart];
       setItems(items);
     } else {
       if (oldObject.type === "To Do") {
@@ -103,11 +113,6 @@ export default function Main() {
   };
 
   const filteredData = items.filter((item) => item.type === filter);
-
-  const openModal = () => {
-    console.log(isModalShown);
-    setIsModalShown(!isModalShown);
-  };
 
   return (
     <div className="main">
@@ -163,7 +168,7 @@ export default function Main() {
           <button className="add-button" onClick={openModal}>
             <img src={PLUS_SIGN} alt="plus" />
           </button>
-          {isModalShown && <Modal />}
+          {isModalShown && <Modal addToDo={addToDo} />}
         </div>
       </div>
       <div className="window-title">
