@@ -42,10 +42,10 @@ const tasks = [
 
 export default function Main(props) {
   const [items, setItems] = useState(tasks); // перезаписываем массив
-  const [type, setType] = useState("To Do"); // перезаписываем категорию, показали на семинаре
+  // const [type, setType] = useState("To Do"); // перезаписываем категорию, показали на семинаре
   const [filter, setFilter] = useState("To Do"); //используем для фильтра и изменения надписи темы
   const [isAddModalShown, setIsAddModalShown] = useState(false); // открытие и закрытие модального окна для добавления todo
-  const [isDeleteModalShown, setIsDeleteModalShown] = useState(false);
+  // const [isDeleteModalShown, setIsDeleteModalShown] = useState(false);
 
   // переключатель цвета button
   const [isActiveToDo, setIsActiveToDo] = useState(true);
@@ -73,9 +73,9 @@ export default function Main(props) {
     setIsAddModalShown(!isAddModalShown);
   };
 
-  const openDeleteModal = () => {
-    setIsDeleteModalShown(!isDeleteModalShown);
-  };
+  // const openDeleteModal = () => {
+  //   setIsDeleteModalShown(!isDeleteModalShown);
+  // };
 
   // adding new todos in a modal window
   const addToDo = (todo) => {
@@ -116,17 +116,23 @@ export default function Main(props) {
     }
   };
 
-  const handleClick = (keyFromClick) => {
+  const handleModal = (keyFromClick) => {
     console.log(keyFromClick);
     const index = items.findIndex((item) => item.id === keyFromClick);
     console.log("my index is", index);
     const oldObject = items[index];
+    // openDeleteModal();
+    const newObject = { ...oldObject, isModalOpen: !oldObject.isModalOpen };
+    const leftPart = items.slice(0, index);
+    const rightPart = items.slice(index + 1, items.length);
+    const newItems = [...leftPart, newObject, ...rightPart];
+    setItems(newItems);
   };
 
   // такое чувство что эта функция не нужна
-  const handleStatus = (typeFromButton) => {
-    setType(typeFromButton);
-  };
+  // const handleStatus = (typeFromButton) => {
+  //   setType(typeFromButton);
+  // };
 
   // фильтр отображения todos по категориям
   const filteredData = items.filter((item) => item.type === filter);
@@ -198,8 +204,7 @@ export default function Main(props) {
               <button
                 className="task-dots-button"
                 onClick={() => {
-                  openDeleteModal();
-                  handleClick(item.id);
+                  handleModal(item.id);
                 }}>
                 <img
                   className="task-dots-img"
@@ -207,10 +212,10 @@ export default function Main(props) {
                   alt="task menu"
                 />
               </button>
-              {isDeleteModalShown &&
+              {item.isModalOpen &&
               (item.type === "To Do" || item.type === "Done") ? (
                 <MoveToTrashModal />
-              ) : isDeleteModalShown && item.type === "Trash" ? (
+              ) : item.isModalOpen && item.type === "Trash" ? (
                 <DeleteModal />
               ) : (
                 ""
