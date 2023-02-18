@@ -11,7 +11,7 @@ export default function DeleteModal({ onFirstClick, onSecondClick }) {
       </button>
       <button onClick={onSecondClick}>
         <img src={MOVE_BACK} alt="move back icon" />
-        Move Back To To Do
+        Move From Trash
       </button>
     </div>
   );

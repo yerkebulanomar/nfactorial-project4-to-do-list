@@ -34,6 +34,18 @@ const tasks = [
   },
   {
     id: uuid(),
+    content: "set alarm for office hours",
+    type: "To Do",
+    checked: false,
+  },
+  {
+    id: uuid(),
+    content: "go outside",
+    type: "To Do",
+    checked: false,
+  },
+  {
+    id: uuid(),
     content: "finish the task",
     type: "Trash",
     checked: true,
@@ -44,12 +56,18 @@ const tasks = [
     type: "Trash",
     checked: false,
   },
+  {
+    id: uuid(),
+    content: "clean my room",
+    type: "Trash",
+    checked: true,
+  },
 ];
 
 export default function Main() {
   const [items, setItems] = useState(tasks); // перезаписываем массив
   const [filter, setFilter] = useState("To Do"); //используем для фильтра и изменения надписи темы
-  const [isAddModalShown, setIsAddModalShown] = useState(false); // открытие и закрытие модального окна для добавления todo
+  const [isAddModalShown, setIsAddModalShown] = useState(false); //открытие и закрытие моадльного окна для добавления элементов
 
   // переключатель цвета button
   const [isActiveToDo, setIsActiveToDo] = useState(true);
@@ -88,17 +106,20 @@ export default function Main() {
     return setItems([...items, newItem]);
   };
 
+  // перемещение тудушек в корзину
   const handleMoveClick = (keyFromClick) => {
     const index = items.findIndex((item) => item.id === keyFromClick);
     const oldObject = items[index];
     const newObject = { ...oldObject };
     newObject.type = "Trash";
+    newObject.isModalOpen = false;
     const leftPart = items.slice(0, index);
     const rightPart = items.slice(index + 1, items.length);
     const newItems = [...leftPart, newObject, ...rightPart];
     setItems(newItems);
   };
 
+  // полное удаление тудушек из корзины
   const handleFirstClick = (keyFromClick) => {
     const index = items.findIndex((item) => item.id === keyFromClick);
     const leftPart = items.slice(0, index);
@@ -107,18 +128,21 @@ export default function Main() {
     setItems(newItems);
   };
 
+  // возвращение тудушек в todo или done
   const handleSecondClick = (keyFromClick) => {
     const index = items.findIndex((item) => item.id === keyFromClick);
     const oldObject = items[index];
     const newObject = { ...oldObject };
     if (newObject.checked === true) {
       newObject.type = "Done";
+      newObject.isModalOpen = false;
       const leftPart = items.slice(0, index);
       const rightPart = items.slice(index + 1, items.length);
       const newItems = [...leftPart, newObject, ...rightPart];
       setItems(newItems);
     } else {
       newObject.type = "To Do";
+      newObject.isModalOpen = false;
       const leftPart = items.slice(0, index);
       const rightPart = items.slice(index + 1, items.length);
       const newItems = [...leftPart, newObject, ...rightPart];
@@ -154,6 +178,7 @@ export default function Main() {
     }
   };
 
+  // отображение модального окна для перемещения и удаления тудушек
   const handleModal = (keyFromClick) => {
     const index = items.findIndex((item) => item.id === keyFromClick);
     const oldObject = items[index];
@@ -161,13 +186,11 @@ export default function Main() {
     const leftPart = items.slice(0, index);
     const rightPart = items.slice(index + 1, items.length);
     const newItems = [...leftPart, newObject, ...rightPart];
-    setItems(newItems);
+    return setItems(newItems);
   };
 
   // фильтр отображения todos по категориям
   const filteredData = items.filter((item) => item.type === filter);
-
-  console.log(items);
 
   return (
     <div className="main">
@@ -243,7 +266,11 @@ export default function Main() {
               </button>
               {item.isModalOpen &&
               (item.type === "To Do" || item.type === "Done") ? (
-                <MoveToTrashModal onClick={() => handleMoveClick(item.id)} />
+                <MoveToTrashModal
+                  onClick={() => {
+                    handleMoveClick(item.id);
+                  }}
+                />
               ) : item.isModalOpen && item.type === "Trash" ? (
                 <DeleteModal
                   onFirstClick={() => handleFirstClick(item.id)}
