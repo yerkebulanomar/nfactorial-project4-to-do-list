@@ -2,15 +2,15 @@ import "./styles.css";
 import TRASH_BIN from "../Images/Trash bin.svg";
 import MOVE_BACK from "../Images/BackToDo.svg";
 
-export default function DeleteModal() {
+export default function DeleteModal({ onFirstClick, onSecondClick }) {
   return (
     <div className="delete-modal">
-      <button>
+      <button onClick={onFirstClick}>
         <img src={TRASH_BIN} alt="trash bin" />
         Delete Forever
       </button>
-      <button>
-        <img src={MOVE_BACK} />
+      <button onClick={onSecondClick}>
+        <img src={MOVE_BACK} alt="move back icon" />
         Move Back To To Do
       </button>
     </div>

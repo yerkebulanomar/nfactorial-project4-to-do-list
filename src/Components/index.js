@@ -88,6 +88,44 @@ export default function Main() {
     return setItems([...items, newItem]);
   };
 
+  const handleMoveClick = (keyFromClick) => {
+    const index = items.findIndex((item) => item.id === keyFromClick);
+    const oldObject = items[index];
+    const newObject = { ...oldObject };
+    newObject.type = "Trash";
+    const leftPart = items.slice(0, index);
+    const rightPart = items.slice(index + 1, items.length);
+    const newItems = [...leftPart, newObject, ...rightPart];
+    setItems(newItems);
+  };
+
+  const handleFirstClick = (keyFromClick) => {
+    const index = items.findIndex((item) => item.id === keyFromClick);
+    const leftPart = items.slice(0, index);
+    const rightPart = items.slice(index + 1, items.length);
+    const newItems = [...leftPart, ...rightPart];
+    setItems(newItems);
+  };
+
+  const handleSecondClick = (keyFromClick) => {
+    const index = items.findIndex((item) => item.id === keyFromClick);
+    const oldObject = items[index];
+    const newObject = { ...oldObject };
+    if (newObject.checked === true) {
+      newObject.type = "Done";
+      const leftPart = items.slice(0, index);
+      const rightPart = items.slice(index + 1, items.length);
+      const newItems = [...leftPart, newObject, ...rightPart];
+      setItems(newItems);
+    } else {
+      newObject.type = "To Do";
+      const leftPart = items.slice(0, index);
+      const rightPart = items.slice(index + 1, items.length);
+      const newItems = [...leftPart, newObject, ...rightPart];
+      setItems(newItems);
+    }
+  };
+
   // распознование включения галочки в checkbox
   const handleCheck = (keyFromCheck) => {
     const index = items.findIndex((item) => item.id === keyFromCheck);
@@ -117,9 +155,7 @@ export default function Main() {
   };
 
   const handleModal = (keyFromClick) => {
-    console.log(keyFromClick);
     const index = items.findIndex((item) => item.id === keyFromClick);
-    console.log("my index is", index);
     const oldObject = items[index];
     const newObject = { ...oldObject, isModalOpen: !oldObject.isModalOpen };
     const leftPart = items.slice(0, index);
@@ -130,6 +166,8 @@ export default function Main() {
 
   // фильтр отображения todos по категориям
   const filteredData = items.filter((item) => item.type === filter);
+
+  console.log(items);
 
   return (
     <div className="main">
@@ -205,9 +243,12 @@ export default function Main() {
               </button>
               {item.isModalOpen &&
               (item.type === "To Do" || item.type === "Done") ? (
-                <MoveToTrashModal />
+                <MoveToTrashModal onClick={() => handleMoveClick(item.id)} />
               ) : item.isModalOpen && item.type === "Trash" ? (
-                <DeleteModal />
+                <DeleteModal
+                  onFirstClick={() => handleFirstClick(item.id)}
+                  onSecondClick={() => handleSecondClick(item.id)}
+                />
               ) : (
                 ""
               )}
