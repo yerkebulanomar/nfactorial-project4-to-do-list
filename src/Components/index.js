@@ -38,14 +38,18 @@ const tasks = [
     type: "Trash",
     checked: true,
   },
+  {
+    id: uuid(),
+    content: "buy mayo",
+    type: "Trash",
+    checked: false,
+  },
 ];
 
-export default function Main(props) {
+export default function Main() {
   const [items, setItems] = useState(tasks); // перезаписываем массив
-  // const [type, setType] = useState("To Do"); // перезаписываем категорию, показали на семинаре
   const [filter, setFilter] = useState("To Do"); //используем для фильтра и изменения надписи темы
   const [isAddModalShown, setIsAddModalShown] = useState(false); // открытие и закрытие модального окна для добавления todo
-  // const [isDeleteModalShown, setIsDeleteModalShown] = useState(false);
 
   // переключатель цвета button
   const [isActiveToDo, setIsActiveToDo] = useState(true);
@@ -72,10 +76,6 @@ export default function Main(props) {
   const openAddModal = () => {
     setIsAddModalShown(!isAddModalShown);
   };
-
-  // const openDeleteModal = () => {
-  //   setIsDeleteModalShown(!isDeleteModalShown);
-  // };
 
   // adding new todos in a modal window
   const addToDo = (todo) => {
@@ -121,18 +121,12 @@ export default function Main(props) {
     const index = items.findIndex((item) => item.id === keyFromClick);
     console.log("my index is", index);
     const oldObject = items[index];
-    // openDeleteModal();
     const newObject = { ...oldObject, isModalOpen: !oldObject.isModalOpen };
     const leftPart = items.slice(0, index);
     const rightPart = items.slice(index + 1, items.length);
     const newItems = [...leftPart, newObject, ...rightPart];
     setItems(newItems);
   };
-
-  // такое чувство что эта функция не нужна
-  // const handleStatus = (typeFromButton) => {
-  //   setType(typeFromButton);
-  // };
 
   // фильтр отображения todos по категориям
   const filteredData = items.filter((item) => item.type === filter);
@@ -152,7 +146,6 @@ export default function Main(props) {
             onClick={() => {
               selectToDo();
               setFilter("To Do");
-              // handleStatus("To Do");
             }}>
             To Do
           </button>
@@ -167,7 +160,6 @@ export default function Main(props) {
             onClick={() => {
               selectDone();
               setFilter("Done");
-              // handleStatus("Done");
             }}>
             Done
           </button>
@@ -182,7 +174,6 @@ export default function Main(props) {
             onClick={() => {
               selectTrash();
               setFilter("Trash");
-              // handleStatus("Trash");
             }}>
             Trash
           </button>
