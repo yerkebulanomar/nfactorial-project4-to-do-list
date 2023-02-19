@@ -14,7 +14,6 @@ const tasks = [
     type: "Done",
     checked: true,
     isModalOpen: false,
-    order: 1,
   },
   {
     id: uuid(),
@@ -22,7 +21,6 @@ const tasks = [
     type: "Done",
     checked: true,
     isModalOpen: false,
-    order: 1,
   },
   {
     id: uuid(),
@@ -30,7 +28,6 @@ const tasks = [
     type: "Done",
     checked: true,
     isModalOpen: false,
-    order: 1,
   },
   {
     id: uuid(),
@@ -38,7 +35,6 @@ const tasks = [
     type: "To Do",
     checked: false,
     isModalOpen: false,
-    order: 0,
   },
   {
     id: uuid(),
@@ -46,7 +42,6 @@ const tasks = [
     type: "To Do",
     checked: false,
     isModalOpen: false,
-    order: 0,
   },
   {
     id: uuid(),
@@ -54,7 +49,6 @@ const tasks = [
     type: "To Do",
     checked: false,
     isModalOpen: false,
-    order: 0,
   },
   {
     id: uuid(),
@@ -62,7 +56,6 @@ const tasks = [
     type: "Trash",
     checked: true,
     isModalOpen: false,
-    order: 1,
   },
   {
     id: uuid(),
@@ -70,7 +63,6 @@ const tasks = [
     type: "Trash",
     checked: false,
     isModalOpen: false,
-    order: 0,
   },
   {
     id: uuid(),
@@ -78,7 +70,6 @@ const tasks = [
     type: "Trash",
     checked: true,
     isModalOpen: false,
-    order: 1,
   },
 ];
 
@@ -124,7 +115,6 @@ export default function Main() {
         const newObject = { ...oldObject };
         newObject.checked = true;
         newObject.type = "Done";
-        newObject.order = 1;
         const leftPart = items.slice(0, index);
         const rightPart = items.slice(index + 1, items.length);
         const newItems = [...leftPart, newObject, ...rightPart];
@@ -134,7 +124,6 @@ export default function Main() {
         const newObject = { ...oldObject };
         newObject.checked = false;
         newObject.type = "To Do";
-        newObject.order = 0;
         const leftPart = items.slice(0, index);
         const rightPart = items.slice(index + 1, items.length);
         const newItems = [...leftPart, newObject, ...rightPart];
