@@ -1,6 +1,6 @@
 import "./styles.css";
 import PLUS_SIGN from "./Images/Plus Math.svg";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import TASK_DOTS from "./Images/Vector.svg";
 import Modal from "./Modal";
 import DeleteModal from "./Modal/DeleteModal";
@@ -211,6 +211,9 @@ export default function Main() {
     }
   });
 
+  //changing page title
+  document.title = filter;
+
   // функция чтобы todo стояли выше done
   function compare(a, b) {
     if (a.checked < b.checked) {
@@ -272,7 +275,10 @@ export default function Main() {
           </button>
         </div>
         <div>
-          <button className="add-button" onClick={openAddModal}>
+          <button
+            className="add-button"
+            onClick={openAddModal}
+            style={{ transform: isAddModalShown ? "rotate(45deg)" : "" }}>
             <img src={PLUS_SIGN} alt="plus" />
           </button>
           {isAddModalShown && (
