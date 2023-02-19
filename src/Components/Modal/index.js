@@ -1,7 +1,7 @@
 import "./styles.css";
 import { useState } from "react";
 
-export default function Modal({ addToDo }) {
+export default function Modal({ addToDo, closeModal }) {
   const [input, setInput] = useState("");
   const handleChange = (e) => {
     // console.log(e.target.value);
@@ -25,6 +25,7 @@ export default function Modal({ addToDo }) {
           if (input !== "") {
             addToDo(input);
             setInput("");
+            closeModal();
           }
         }}>
         Add

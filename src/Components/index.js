@@ -104,6 +104,47 @@ export default function Main() {
     setIsAddModalShown(!isAddModalShown);
   };
 
+  // распознование включения галочки в checkbox
+  const handleCheck = (keyFromCheck) => {
+    const index = items.findIndex((item) => item.id === keyFromCheck);
+    const oldObject = items[index];
+    if (oldObject.type === "Trash") {
+      setItems(items);
+    } else {
+      if (oldObject.type === "To Do") {
+        const newObject = { ...oldObject };
+        newObject.checked = true;
+        newObject.type = "Done";
+        const leftPart = items.slice(0, index);
+        const rightPart = items.slice(index + 1, items.length);
+        const newItems = [...leftPart, newObject, ...rightPart];
+        return setItems(newItems);
+      }
+      if (oldObject.type === "Done") {
+        const newObject = { ...oldObject };
+        newObject.checked = false;
+        newObject.type = "To Do";
+        const leftPart = items.slice(0, index);
+        const rightPart = items.slice(index + 1, items.length);
+        const newItems = [...leftPart, newObject, ...rightPart];
+        return setItems(newItems);
+      }
+    }
+  };
+
+  // отображение модального окна для перемещения и удаления тудушек
+  const handleModal = (keyFromClick) => {
+    const index = items.findIndex((item) => item.id === keyFromClick);
+    const oldObject = items[index];
+    const newObject = { ...oldObject };
+    items.forEach((item) => (item.isModalOpen = false));
+    newObject.isModalOpen = !newObject.isModalOpen;
+    const leftPart = items.slice(0, index);
+    const rightPart = items.slice(index + 1, items.length);
+    const newItems = [...leftPart, newObject, ...rightPart];
+    return setItems(newItems);
+  };
+
   // adding new todos in a modal window
   const addToDo = (todo) => {
     const newItem = {
@@ -159,49 +200,24 @@ export default function Main() {
     }
   };
 
-  // распознование включения галочки в checkbox
-  const handleCheck = (keyFromCheck) => {
-    const index = items.findIndex((item) => item.id === keyFromCheck);
-    const oldObject = items[index];
-    if (oldObject.type === "Trash") {
-      setItems(items);
-    } else {
-      if (oldObject.type === "To Do") {
-        const newObject = { ...oldObject };
-        newObject.checked = true;
-        newObject.type = "Done";
-        const leftPart = items.slice(0, index);
-        const rightPart = items.slice(index + 1, items.length);
-        const newItems = [...leftPart, newObject, ...rightPart];
-        return setItems(newItems);
-      }
-      if (oldObject.type === "Done") {
-        const newObject = { ...oldObject };
-        newObject.checked = false;
-        newObject.type = "To Do";
-        const leftPart = items.slice(0, index);
-        const rightPart = items.slice(index + 1, items.length);
-        const newItems = [...leftPart, newObject, ...rightPart];
-        return setItems(newItems);
-      }
-    }
-  };
-
-  // отображение модального окна для перемещения и удаления тудушек
-  const handleModal = (keyFromClick) => {
-    const index = items.findIndex((item) => item.id === keyFromClick);
-    const oldObject = items[index];
-    const newObject = { ...oldObject };
-    items.forEach((item) => (item.isModalOpen = false));
-    newObject.isModalOpen = !newObject.isModalOpen;
-    const leftPart = items.slice(0, index);
-    const rightPart = items.slice(index + 1, items.length);
-    const newItems = [...leftPart, newObject, ...rightPart];
-    return setItems(newItems);
-  };
-
   // фильтр отображения todos по категориям
-  const filteredData = items.filter((item) => item.type === filter);
+  const filteredData = items.filter((item) => {
+    return item.type === filter;
+  });
+
+  // const filteredData = items.filter((item) => {
+  //   if (filter === "To Do") {
+  //     const filteredToDo = items.filter((object) => object.type === "To Do");
+  //     const filteredDone = items.filter((object) => object.type === "Done");
+  //     const filtered = [...filteredToDo, ...filteredDone];
+  //     console.log(filtered);
+  //     return filtered;
+  //   } else if (filter === "Done") {
+  //     return item.type === "Done";
+  //   } else {
+  //     return item.type === "Trash";
+  //   }
+  // });
 
   return (
     <div className="main">
@@ -254,7 +270,9 @@ export default function Main() {
           <button className="add-button" onClick={openAddModal}>
             <img src={PLUS_SIGN} alt="plus" />
           </button>
-          {isAddModalShown && <Modal addToDo={addToDo} />}
+          {isAddModalShown && (
+            <Modal addToDo={addToDo} closeModal={openAddModal} />
+          )}
         </div>
       </div>
       <div className="window-title">
