@@ -103,7 +103,7 @@ export default function Main() {
       type: "To Do",
       checked: false,
     };
-    return setItems([...items, newItem]);
+    return setItems([newItem, ...items]);
   };
 
   // перемещение тудушек в корзину
