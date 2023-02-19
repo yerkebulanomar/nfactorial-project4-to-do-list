@@ -121,3 +121,42 @@ button img {
   width: 24px;
   height: 24px;
 }
+
+@media only screen and (max-width: 820px) {
+  .add-modal {
+    position: absolute;
+    top: 220px;
+    left: 25%;
+    width: 235px;
+    height: 120px;
+  }
+
+  .add-modal-title {
+    font-size: 14px;
+    line-height: 14px;
+    margin: 10px 10px 0 10px;
+  }
+
+  textarea {
+    width: 206px;
+    height: 40px;
+    padding: 5px;
+    margin: 10px 10px 0 10px;
+  }
+
+  .modal-input {
+    margin: 0 10px;
+  }
+  .modal-add-button {
+    height: 20px;
+    font-size: 14px;
+    line-height: 14px;
+    margin: 0 10px 10px 10px;
+  }
+
+  textarea::placeholder {
+    font-size: 12px;
+    line-height: 12px;
+    color: #959595;
+  }
+}
