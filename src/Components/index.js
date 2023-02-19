@@ -13,54 +13,63 @@ const tasks = [
     content: "write an essay",
     type: "Done",
     checked: true,
+    isModalOpen: false,
   },
   {
     id: uuid(),
     content: "read the book",
     type: "Done",
     checked: true,
+    isModalOpen: false,
   },
   {
     id: uuid(),
     content: "go to gym",
     type: "Done",
     checked: true,
+    isModalOpen: false,
   },
   {
     id: uuid(),
     content: "call mom",
     type: "To Do",
     checked: false,
+    isModalOpen: false,
   },
   {
     id: uuid(),
     content: "set alarm for office hours",
     type: "To Do",
     checked: false,
+    isModalOpen: false,
   },
   {
     id: uuid(),
     content: "go outside",
     type: "To Do",
     checked: false,
+    isModalOpen: false,
   },
   {
     id: uuid(),
     content: "finish the task",
     type: "Trash",
     checked: true,
+    isModalOpen: false,
   },
   {
     id: uuid(),
     content: "buy mayo",
     type: "Trash",
     checked: false,
+    isModalOpen: false,
   },
   {
     id: uuid(),
     content: "clean my room",
     type: "Trash",
     checked: true,
+    isModalOpen: false,
   },
 ];
 
@@ -182,7 +191,9 @@ export default function Main() {
   const handleModal = (keyFromClick) => {
     const index = items.findIndex((item) => item.id === keyFromClick);
     const oldObject = items[index];
-    const newObject = { ...oldObject, isModalOpen: !oldObject.isModalOpen };
+    const newObject = { ...oldObject };
+    items.forEach((item) => (item.isModalOpen = false));
+    newObject.isModalOpen = !newObject.isModalOpen;
     const leftPart = items.slice(0, index);
     const rightPart = items.slice(index + 1, items.length);
     const newItems = [...leftPart, newObject, ...rightPart];
