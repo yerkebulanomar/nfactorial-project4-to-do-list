@@ -14,6 +14,7 @@ const tasks = [
     type: "Done",
     checked: true,
     isModalOpen: false,
+    order: 1,
   },
   {
     id: uuid(),
@@ -21,6 +22,7 @@ const tasks = [
     type: "Done",
     checked: true,
     isModalOpen: false,
+    order: 1,
   },
   {
     id: uuid(),
@@ -28,6 +30,7 @@ const tasks = [
     type: "Done",
     checked: true,
     isModalOpen: false,
+    order: 1,
   },
   {
     id: uuid(),
@@ -35,6 +38,7 @@ const tasks = [
     type: "To Do",
     checked: false,
     isModalOpen: false,
+    order: 0,
   },
   {
     id: uuid(),
@@ -42,6 +46,7 @@ const tasks = [
     type: "To Do",
     checked: false,
     isModalOpen: false,
+    order: 0,
   },
   {
     id: uuid(),
@@ -49,6 +54,7 @@ const tasks = [
     type: "To Do",
     checked: false,
     isModalOpen: false,
+    order: 0,
   },
   {
     id: uuid(),
@@ -56,6 +62,7 @@ const tasks = [
     type: "Trash",
     checked: true,
     isModalOpen: false,
+    order: 1,
   },
   {
     id: uuid(),
@@ -63,6 +70,7 @@ const tasks = [
     type: "Trash",
     checked: false,
     isModalOpen: false,
+    order: 0,
   },
   {
     id: uuid(),
@@ -70,6 +78,7 @@ const tasks = [
     type: "Trash",
     checked: true,
     isModalOpen: false,
+    order: 1,
   },
 ];
 
@@ -115,6 +124,7 @@ export default function Main() {
         const newObject = { ...oldObject };
         newObject.checked = true;
         newObject.type = "Done";
+        newObject.order = 1;
         const leftPart = items.slice(0, index);
         const rightPart = items.slice(index + 1, items.length);
         const newItems = [...leftPart, newObject, ...rightPart];
@@ -124,6 +134,7 @@ export default function Main() {
         const newObject = { ...oldObject };
         newObject.checked = false;
         newObject.type = "To Do";
+        newObject.order = 0;
         const leftPart = items.slice(0, index);
         const rightPart = items.slice(index + 1, items.length);
         const newItems = [...leftPart, newObject, ...rightPart];
@@ -199,21 +210,30 @@ export default function Main() {
       setItems(newItems);
     }
   };
-  //
-  // фильтр отображения todos по категориям
-  // const filteredData = items.filter((item) => {
-  //   return item.type === filter;
-  // });
 
+  // фильтр отображения todos по категориям
   const filteredData = items.filter((item) => {
     if (filter === "To Do") {
-      return item.type === "To Do" || item.type === "Done";
+      return item.type === "Done" || item.type === "To Do";
     } else if (filter === "Done") {
       return item.type === "Done";
     } else {
       return item.type === "Trash";
     }
   });
+
+  // функция чтобы todo стояли выше done
+  function compare(a, b) {
+    if (a.checked < b.checked) {
+      return -1;
+    }
+    if (a.checked > b.checked) {
+      return 1;
+    }
+    return 0;
+  }
+
+  const sortedData = filteredData.sort(compare);
 
   return (
     <div className="main">
@@ -275,7 +295,7 @@ export default function Main() {
         <h4 className="title-text">{filter}</h4>
       </div>
       <div className="task-list">
-        {filteredData.map((item) => (
+        {sortedData.map((item) => (
           <div className="task" key={item.id}>
             <div className="modal-container">
               <button
