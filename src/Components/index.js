@@ -199,25 +199,21 @@ export default function Main() {
       setItems(newItems);
     }
   };
-
+  //
   // фильтр отображения todos по категориям
-  const filteredData = items.filter((item) => {
-    return item.type === filter;
-  });
-
   // const filteredData = items.filter((item) => {
-  //   if (filter === "To Do") {
-  //     const filteredToDo = items.filter((object) => object.type === "To Do");
-  //     const filteredDone = items.filter((object) => object.type === "Done");
-  //     const filtered = [...filteredToDo, ...filteredDone];
-  //     console.log(filtered);
-  //     return filtered;
-  //   } else if (filter === "Done") {
-  //     return item.type === "Done";
-  //   } else {
-  //     return item.type === "Trash";
-  //   }
+  //   return item.type === filter;
   // });
+
+  const filteredData = items.filter((item) => {
+    if (filter === "To Do") {
+      return item.type === "To Do" || item.type === "Done";
+    } else if (filter === "Done") {
+      return item.type === "Done";
+    } else {
+      return item.type === "Trash";
+    }
+  });
 
   return (
     <div className="main">
