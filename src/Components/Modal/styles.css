@@ -142,6 +142,8 @@ button img {
     height: 40px;
     padding: 5px;
     margin: 10px 10px 0 10px;
+    font-size: 14px;
+    line-height: 14px;
   }
 
   .modal-input {
@@ -155,8 +157,8 @@ button img {
   }
 
   textarea::placeholder {
-    font-size: 12px;
-    line-height: 12px;
+    font-size: 14px;
+    line-height: 14px;
     color: #959595;
   }
 }
